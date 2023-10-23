@@ -29,8 +29,7 @@ DEBUG = True
 X_FRAME_OPTIONS = '*'
 
 ALLOWED_HOSTS = [
-    'fiberworks--travisditmanson.repl.co',
-    'fiberworks.travisditmanson.repl.co',
+  
 ]
 
 
