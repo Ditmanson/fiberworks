@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-v8fw4s#o)jg%p_n@ixal+_ft9s^0k#z-pg2x$(q^lh=em6^x1*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+X_FRAME_OPTIONS = '*'
+
+ALLOWED_HOSTS = [
+   
+]
 
 
 # Application definition
@@ -38,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'fiberworks_app'
+    'fiberworks_app',
+     'bootstrap5',
 ]
 
 MIDDLEWARE = [
