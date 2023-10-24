@@ -1,0 +1,31 @@
+{% extends 'fiberworks_app/base_template.html' %}
+
+<!-- Replace block content in base_template.html -->
+{% block content %}
+
+    <a class="btn btn-outline-success" href="{% url 'create_product' %}">Create New Product</a>
+  
+  {% for product in products %}
+    <div class="col bg-light text-bg-light p-3">
+      <div class="dropdown dropend">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">{{ product.name }}</button>
+        <ul class="dropdown-menu">
+          <li>
+            <a class="btn btn-outline-primary" href="{{ product.get_absolute_url }}">Details</a>
+          </li>
+          <li>
+            <a class="btn btn-outline-primary" href="{% url 'update_product' product.pk %}">Update</a>
+          </li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <li class="">
+            <a class="btn btn-outline-danger" href="{% url 'delete_product' product.pk %}">Delete</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    {% empty %}
+    <p>There are no products.</p>
+  {% endfor %}
+{% endblock %}
