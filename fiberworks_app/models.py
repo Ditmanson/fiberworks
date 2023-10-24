@@ -27,7 +27,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     def get_absolute_url(self):
-        return reverse("model_detail", kwargs={"pk": self.pk})
+        return reverse("product_details", kwargs={"pk": self.pk})
 
 
 class Customer(models.Model):
@@ -40,7 +40,7 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
     def get_absolute_url(self):
-        return reverse("model_detail", kwargs={"pk": self.pk})
+        return reverse("customer_details", kwargs={"pk": self.pk})
 
 
     

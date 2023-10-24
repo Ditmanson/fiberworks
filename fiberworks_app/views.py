@@ -13,7 +13,7 @@ class ProductListView(ListView):
 
 class ProductDetailView(DetailView):
     model = Product
-    template_name = 'fiberworks_app/product_detail.html'
+    template_name = 'fiberworks_app/product_details.html'
     context_object_name = 'product'
 
 def createProduct(request):
@@ -29,6 +29,26 @@ def createProduct(request):
     context = {'form': form}
     return render(request, 'fiberworks_app/product_form.html', context)
 
+def updateProduct(request, pk):
+    product = Product.objects.get(id=pk)
+    form = ProductForm(instance=product)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()  # Save the product to the database
+            return redirect('product_details', pk=product.id)  # Redirect to the product details page
+
+    context = {'form': form}
+    return render(request, 'fiberworks_app/product_form.html', context)
+
+def deleteProduct(request, pk):
+    product = Product.objects.get(id=pk)
+    if request.method == 'POST':
+        product.delete()
+        return redirect('products')
+
+    context = {'product': product}
+    return render(request, 'fiberworks_app/delete_product.html', context)
 
 def index(request):
     products_in_stock = Product.objects.filter(in_stock=True)
@@ -37,9 +57,3 @@ def index(request):
 def products(request):
     products_in_stock = Product.objects.filter(in_stock=True)
     return render(request, 'fiberworks_app/products.html', {'products_in_stock': products_in_stock})
-
-# Create your views here.
-# def index(request):
-#     student_active_portfolios = Student.objects.select_related('portfolio').all().filter(portfolio__is_active=True)
-#     print("active portfolio query set", student_active_portfolios)
-#     return render( request, 'portfolio_app/index.html', {'student_active_portfolios':student_active_portfolios})

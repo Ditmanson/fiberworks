@@ -1,0 +1,16 @@
+{% extends 'fiberworks_app/base_template.html' %}
+
+{% block content %}
+  <div class="row ">
+    <div class="col-md-6">
+      <div class="card card-body >
+        <h1>Are you Sure</h1>
+        <form action="{% url 'delete_product' product.pk %}" method="POST">
+          {% csrf_token %}
+          <input class="btn btn-danger text-uppercase" type="submit" name="confirm" value="Confirm" class="" />
+          <a class="btn btn-primary text-uppercase" href="{% url 'products' %}">cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
