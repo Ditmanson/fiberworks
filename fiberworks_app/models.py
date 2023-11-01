@@ -6,7 +6,7 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
     def get_absolute_url(self):
-        return reverse("model_detail", kwargs={"pk": self.pk})
+        return reverse("tag_detail", kwargs={"pk": self.pk})
     
 class Product(models.Model):
     CATEGORY = (
