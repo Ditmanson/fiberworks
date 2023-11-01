@@ -28,8 +28,8 @@ DEBUG = True
 
 X_FRAME_OPTIONS = '*'
 
-ALLOWED_HOSTS = [
-  
+ALLOWED_HOSTS = ['192.168.1.5:8000' , '0.0.0.0:8000', '0.0.0.0', '192.168.1.5'
+ 
 ]
 
 

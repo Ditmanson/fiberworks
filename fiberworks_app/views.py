@@ -29,6 +29,30 @@ def createProduct(request):
     context = {'form': form}
     return render(request, 'fiberworks_app/product_form.html', context)
 
+def createTag(request):
+    if request.method == 'POST':
+        form = TagForm(request.POST)
+        if form.is_valid():
+            form.save()  # Save the product to the database
+            return redirect('dashboard')  # Redirect to an empty form
+    else:
+        form = TagForm()  # Create a new form for GET requests
+    context = {'form': form}
+    return render(request, 'fiberworks_app/Tag_form.html', context)
+
+
+def updateTag(request, pk):
+    tag = Tag.objects.get(id=pk)
+    form = TagForm(instance=tag)
+    if request.method == 'POST':
+        form = TagForm(request.POST,  instance=tag)
+        if form.is_valid():
+            form.save()  # Save the product to the database
+            return redirect('dashboard')  # Redirect to the product details page
+
+    context = {'form': form}
+    return render(request, 'fiberworks_app/tag_form.html', context)
+
 def updateProduct(request, pk):
     product = Product.objects.get(id=pk)
     form = ProductForm(instance=product)
@@ -36,7 +60,7 @@ def updateProduct(request, pk):
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()  # Save the product to the database
-            return redirect('product_details', pk=product.id)  # Redirect to the product details page
+            return redirect('dashboard')  # Redirect to the product details page
 
     context = {'form': form}
     return render(request, 'fiberworks_app/product_form.html', context)
@@ -50,13 +74,28 @@ def deleteProduct(request, pk):
     context = {'product': product}
     return render(request, 'fiberworks_app/delete_product.html', context)
 
+def deleteTag(request, pk):
+    tag = Tag.objects.get(id=pk)
+    if request.method == 'POST':
+        tag.delete()
+        return redirect('dashboard')
+
+    context = {'tag': tag}
+    return render(request, 'fiberworks_app/delete_tag.html', context)
+
 def index(request):
     products_in_stock = Product.objects.filter(in_stock=True)
     return render(request, 'fiberworks_app/index.html', {'products_in_stock': products_in_stock})
 
-def products(request):
+def dashboard(request):
     products = Product.objects.all()
-    return render(request, 'fiberworks_app/dashboard.html', {'products': products})
+    tags = Tag.objects.all().distinct()
+    print(tags)  # Add this line for debugging
+    return render(request, 'fiberworks_app/dashboard.html', {'products': products, 'tags': tags})
+
+def products(request):
+    products = Product.objects.filter(in_stock=True)
+    return render(request, 'fiberworks_app/products.html', {'products': products})
 
 def customerLogin(request):
     customer = Customer.objects.all()
