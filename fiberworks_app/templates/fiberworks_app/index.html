@@ -2,17 +2,28 @@
 
 <!-- Replace block content in base_template.html -->
 {% block content %}
-  <div class="container rounded  bg-dark text-light">
-    <h2>Need Some Content for the home page</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi ducimus illo aliquam est provident facere maiores sequi? Aperiam, exercitationem adipisci perspiciatis consectetur ex recusandae! Impedit accusamus voluptatem ab, odit perspiciatis doloremque voluptate! Distinctio aliquam voluptatum consequuntur cumque amet, at dolore nesciunt adipisci obcaecati minima reiciendis earum placeat, labore, asperiores mollitia.</p>  
+{% for info in homescreen %}
+<div class="container rounded text-light" style="background-color: #052c65;">
+    <h2>{{info.title}}</h2>
+    <p>{{info.paragraph}}</p>
 </div>
-<div class="container rounded bg-primary text-light">
-    <h2>Need Some Content for the home page</h2>
-    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente rerum reiciendis similique voluptates dolorum suscipit nihil nobis beatae aperiam unde a numquam consequuntur harum quaerat sint repellendus error corporis delectus aut labore at consectetur, dolores molestiae magni. Molestiae, sit. Deserunt omnis ea quis temporibus maiores, et perspiciatis asperiores fugit, molestiae labore, totam nam officiis vitae nisi esse delectus magnam rem repellat similique voluptatibus dolorum. Repellendus provident illo iste facere tempore, numquam sed nisi architecto. Vel quae perspiciatis illum voluptatem, ratione obcaecati asperiores sed reprehenderit commodi porro iure. Distinctio, in deleniti possimus nemo provident, ad officiis quo beatae minima, tenetur quod!</p>
+{% empty %}
+<p>More Info Soon To Come</p>
+{% endfor %}
+
+
+<div class="container">
+    <div class="row">
+        {% for product in home_page_products %}
+        <div class="col">
+            <img class=" rounded  w-70 my-auto"  src="{% if product.image %}{{ product.image.url }}{% else %}https://images.unsplash.com/photo-1544967919-44c1ef2f9e7a?auto=format&fit=crop&q=60&w=600&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8a25pdHxlbnwwfHwwfHx8MA%3D%3D{% endif %}" alt="Card image" style="max-width: 100%;">
+        </div>
+        {% empty %}
+        <p></p>
+        {% endfor %}
+    </div>
 </div>
-<div class="container rounded  bg-dark text-light">
-    <h2>Need Some Content for the home page</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi ducimus illo aliquam est provident facere maiores sequi? Aperiam, exercitationem adipisci perspiciatis consectetur ex recusandae! Impedit accusamus voluptatem ab, odit perspiciatis doloremque voluptate! Distinctio aliquam voluptatum consequuntur cumque amet, at dolore nesciunt adipisci obcaecati minima reiciendis earum placeat, labore, asperiores mollitia.</p>  
-</div>
+
+   
 
 {% endblock %}

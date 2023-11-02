@@ -9,3 +9,7 @@ class TagForm(ModelForm):
     class Meta:
         model = Tag
         fields = '__all__'
+class HomeScreenForm(ModelForm):
+    class Meta:
+        model = Homescreen
+        fields = '__all__'

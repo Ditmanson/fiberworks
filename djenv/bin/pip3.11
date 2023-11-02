@@ -1,4 +1,4 @@
-#!/Users/travisditmanson/Documents/fiberworks/djenv/bin/python3
+#!/Users/travisditmanson/fiberworks/djenv/bin/python3.11
 # -*- coding: utf-8 -*-
 import re
 import sys
