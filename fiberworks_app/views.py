@@ -21,7 +21,7 @@ def createProduct(request):
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()  # Save the product to the database
-            return redirect('create_product')  # Redirect to an empty form
+            return redirect('dashboard')  # Redirect to an empty form
 
     else:
         form = ProductForm()  # Create a new form for GET requests
@@ -31,14 +31,25 @@ def createProduct(request):
 
 def createTag(request):
     if request.method == 'POST':
-        form = TagForm(request.POST)
+        form = HomeScreenForm(request.POST)
         if form.is_valid():
             form.save()  # Save the product to the database
             return redirect('dashboard')  # Redirect to an empty form
     else:
         form = TagForm()  # Create a new form for GET requests
     context = {'form': form}
-    return render(request, 'fiberworks_app/Tag_form.html', context)
+    return render(request, 'fiberworks_app/Tag_form.html', context) 
+
+def createHomeScreen(request):
+    if request.method == 'POST':
+        form = HomeScreenForm(request.POST)
+        if form.is_valid():
+            form.save()  # Save the product to the database
+            return redirect('dashboard')  # Redirect to an empty form
+    else:
+        form = HomeScreenForm()  # Create a new form for GET requests
+    context = {'form': form}
+    return render(request, 'fiberworks_app/home_screen_form.html', context)
 
 
 def updateTag(request, pk):
@@ -51,7 +62,19 @@ def updateTag(request, pk):
             return redirect('dashboard')  # Redirect to the product details page
 
     context = {'form': form}
-    return render(request, 'fiberworks_app/tag_form.html', context)
+    return render(request, 'fiberworks_app/home_screen_form.html', context)
+
+def updateHomeScreen(request, pk):
+    homescreen = Homescreen.objects.get(id=pk)
+    form = HomeScreenForm(instance=homescreen)
+    if request.method == 'POST':
+        form = HomeScreenForm(request.POST,  instance=homescreen)
+        if form.is_valid():
+            form.save()  # Save the product to the database
+            return redirect('dashboard')  # Redirect to the product details page
+
+    context = {'form': form}
+    return render(request, 'fiberworks_app/home_screen_form.html', context)
 
 def updateProduct(request, pk):
     product = Product.objects.get(id=pk)
@@ -83,20 +106,37 @@ def deleteTag(request, pk):
     context = {'tag': tag}
     return render(request, 'fiberworks_app/delete_tag.html', context)
 
+def deleteHomeScreen(request, pk):
+    homescreen = Homescreen.objects.get(id=pk)
+    if request.method == 'POST':
+        homescreen.delete()
+        return redirect('dashboard')
+
+    context = {'homescreen': homescreen}
+    return render(request, 'fiberworks_app/delete_home_screen.html', context)
+
 def index(request):
     products_in_stock = Product.objects.filter(in_stock=True)
-    return render(request, 'fiberworks_app/index.html', {'products_in_stock': products_in_stock})
+    homescreen = Homescreen.objects.all()
+    home_page_products = Product.objects.filter(on_homepage=True)
+
+    return render(request, 'fiberworks_app/index.html', {'home_page_products': home_page_products, 'homescreen': homescreen })
 
 def dashboard(request):
     products = Product.objects.all()
     tags = Tag.objects.all().distinct()
+    homescreen = Homescreen.objects.all()
     print(tags)  # Add this line for debugging
-    return render(request, 'fiberworks_app/dashboard.html', {'products': products, 'tags': tags})
+    return render(request, 'fiberworks_app/dashboard.html', {'products': products, 'tags': tags, 'homescreen': homescreen})
 
 def products(request):
     products = Product.objects.filter(in_stock=True)
-    return render(request, 'fiberworks_app/products.html', {'products': products})
+    return render(request, 'fiberworks_app/products.html', {'products': products, })
 
 def customerLogin(request):
     customer = Customer.objects.all()
     return render(request, 'fiberworks_app/customer_login.html', {'customer': customer})
+
+def homescreen(request):
+    homescreen = Homescreen.objects.all()
+    return render(request, 'fiberworks_app/homescreen.html', {'homescreen': homescreen})

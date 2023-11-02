@@ -21,13 +21,23 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2)
     description = models.CharField(max_length=250, blank=True, null=True)
     category = models.CharField(max_length=20, default='hats', choices=CATEGORY)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, blank=True)
     image = models.ImageField(blank=True, null=True)
     in_stock = models.BooleanField(default=False)    
+    on_homepage = models.BooleanField(default=False)
     def __str__(self):
         return self.name
     def get_absolute_url(self):
         return reverse("product_details", kwargs={"pk": self.pk})
+
+class Homescreen(models.Model):
+    title = models.CharField(max_length=100, blank=True, null=True)
+    paragraph = models.TextField(max_length=1000, blank=True, null=True)
+
+    def __str__(self):
+        return self.intro
+    def get_absolute_url(self):
+        return reverse("homescreen_details", kwargs={"pk": self.pk})
 
 
 class Customer(models.Model):

@@ -2,54 +2,52 @@
 
 <!-- Replace block content in base_template.html -->
 {% block content %}
+  <div class="row">
+    <div class="col-md-8">
+      <a class="btn btn-success m-2" href="{% url 'create_product' %}">Create New Product</a>
+      {% for product in products %}
+        <div class="row">
+          <ul></ul>
+          <div class="col bg-light p-3 text-center">
+            <a class="btn btn-outline-primary" href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+          </div>
 
-<div class="row">
-  <div class="col-md-4">
-    <a class="btn btn-outline-success m-2" href="{% url 'create_product' %}">Create New Product</a>
-    {% for product in products %}
-    <div class="col bg-light text-bg-light p-3">
-      <div class="dropdown dropend">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">{{ product.name }} ${{product.price}}</button> 
-        <ul class="dropdown-menu">
-         
-          <li class="p-1">
-            <a class="btn btn-outline-primary" href="{{ product.get_absolute_url }}">Details</a>
-          </li>
-          <li class="p-1">
+          <div class="col bg-light p-3">
             <a class="btn btn-outline-primary" href="{% url 'update_product' product.pk %}">Update</a>
-          </li>
-          <li class="p-1">
-            <hr class="dropdown-divider" />
-          </li>
-          <li class="p-1">
+          </div>
+          <div class="col bg-light p-3 text-center">
             <a class="btn btn-outline-danger" href="{% url 'delete_product' product.pk %}">Delete</a>
-          </li>
-        </ul>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="col-md-4">
+      <!-- Adjust the column size as needed -->
+      <a class="btn btn-success m-2" href="{% url 'create_tag' %}">Create Product Tags</a>
+      {% for tag in tags %}
+        <ul></ul>
+        <div class="col bg-light text-bg-light p-3">
+          <div class="row">
+            <div class="col">
+              <a class="btn btn-outline-primary" href="{% url 'update_tag' tag.pk %}">{{ tag.name }}</a>
+            </div>
+            <div class="col">
+              <a class="btn btn-outline-danger" href="{% url 'delete_tag' tag.pk %}">Delete</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="p-2">
+    <a class="btn btn-success m-2" href="{% url 'create_home_screen' %}">Create Home Screen Paragraphs</a>
+  </div>
+  {% for title in homescreen %}
+    <div class="row bg-light">
+      <div class="col">
+        <a class="btn btn-outline-primary" href="{% url 'update_home_screen' title.pk %}">{{ title.title }}</a>
+        <a class="btn btn-outline-danger" href="{% url 'delete_home_screen' title.pk %}">Delete</a>
       </div>
     </div>
-    {% endfor %}
-  </div>
-  <div class="col-md-4"> <!-- Adjust the column size as needed -->
-    <a class="btn btn-outline-success m-2" href="{% url 'create_tag' %}">Create Product Tags</a>
-    {% for tag in tags%}
-    <div class="col bg-light text-bg-light p-3">
-      <div class="dropdown dropend">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">{{ tag.name }}</button>
-        <ul class="dropdown-menu">
-          <li class="p-1">
-            <a class="btn btn-outline-primary" href="{% url 'update_tag' tag.pk %}">Update</a>
-          </li>
-          <li class="p-1">
-            <hr class="dropdown-divider" />
-          </li>
-          <li class="p-1">
-            <a class="btn btn-outline-danger" href="{% url 'delete_tag' tag.pk %}">Delete</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    {%endfor%}
-  </div>
-</div>
-
+  {% endfor %}
 {% endblock %}
