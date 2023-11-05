@@ -2,28 +2,29 @@
 
 <!-- Replace block content in base_template.html -->
 {% block content %}
-{% for info in homescreen %}
-<div class="container rounded text-light" style="background-color: #052c65;">
-    <h2>{{info.title}}</h2>
-    <p>{{info.paragraph}}</p>
-</div>
-{% empty %}
-<p>More Info Soon To Come</p>
-{% endfor %}
+  {% for info in homescreen %}
+    <div class="container rounded text-light" style="background-color: #052c65;">
+      <h2>{{ info.title }}</h2>
+      <p>{{ info.paragraph }}</p>
+    </div>
+    {% empty %}
+    <p>More Info Soon To Come</p>
+  {% endfor %}
 
-
-<div class="container">
+  <div class="container">
     <div class="row">
-        {% for product in home_page_products %}
+      {% for product in home_page_products %}
         <div class="col">
-            <img class=" rounded  w-70 my-auto"  src="{% if product.image %}{{ product.image.url }}{% else %}https://images.unsplash.com/photo-1544967919-44c1ef2f9e7a?auto=format&fit=crop&q=60&w=600&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8a25pdHxlbnwwfHwwfHx8MA%3D%3D{% endif %}" alt="Card image" style="max-width: 100%;">
+          <img class="rounded w-70 my-auto"
+            src="{% if product.image %}
+              {{ product.image.url }}
+            {% endif %}"
+            alt="Card image"
+            style="max-width: 100%;" />
         </div>
         {% empty %}
         <p></p>
-        {% endfor %}
+      {% endfor %}
     </div>
-</div>
-
-   
-
+  </div>
 {% endblock %}
