@@ -1,0 +1,30 @@
+{% extends 'fiberworks_app/base_template.html' %}
+{% block content %}
+
+<h1>
+   Not Ready
+</h1>
+{% csrf_token %}
+<form method="POST">
+   {% csrf_token %}
+   {{ form.as_p }}
+   <button type="submit">Login</button>
+</form>
+
+{% comment %} <form method="POST">
+   {% csrf_token %}
+   <label for="username">Username:</label>
+   <input type="text" id="username" name="username" required>
+   <label for="password">Password:</label>
+   <input type="password" id="password" name="password" required>
+   <button type="submit">Login</button>
+</form> {% endcomment %}
+
+
+
+   {% for message in messages %}
+      <p>{{ message }}</p>
+   {% endfor %}
+
+  <a href="{% url 'register'  %}"> Sign Up </a>
+{% endblock %}

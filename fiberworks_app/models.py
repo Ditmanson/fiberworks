@@ -35,7 +35,7 @@ class Homescreen(models.Model):
     paragraph = models.TextField(max_length=1000, blank=True, null=True)
 
     def __str__(self):
-        return self.intro
+        return self.title
     def get_absolute_url(self):
         return reverse("homescreen_details", kwargs={"pk": self.pk})
 
@@ -66,6 +66,6 @@ class Order(models.Model):
     date_ordered = models.DateTimeField(auto_now_add=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS, default='Pending')
     def __str__(self):
-        return self.product.name
+        return self.product.name if self.product else ''
     def get_absolute_url(self):
-        return reverse("model_detail", kwargs={"pk": self.pk})
+        return reverse("order_detail", kwargs={"pk": self.pk})

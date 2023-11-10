@@ -12,15 +12,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-v8fw4s#o)jg%p_n@ixal+_ft9s^0k#z-pg2x$(q^lh=em6^x1*'
+# SECRET_KEY= 'django-insecure-v8fw4s#o)jg%p_n@ixal+_ft9s^0k#z-pg2x$(q^lh=em6^x1*'
+SECRET_KEY= config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 X_FRAME_OPTIONS = '*'
 
-ALLOWED_HOSTS = ['localhost','192.168.1.5:8000' , '0.0.0.0:8000', '0.0.0.0', '192.168.1.5'
- 
+ALLOWED_HOSTS = ['localhost','192.168.1.5:8000' , '0.0.0.0:8000', '0.0.0.0', '192.168.1.5',
+ '127.0.0.1'
 ]
 
 
@@ -134,16 +135,7 @@ AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = 'jades-fiberworks-bucket'
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
-# DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
 
-# STORAGES = {
-#     "default": {
-#         "BACKEND": "storages.backends.s3.S3Storage",
-#     },
-#     "staticfiles": {
-#         "BACKEND": "storages.backends.s3.S3Storage",
-#     },
-# }
 DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
 
 STATICFILES_STORAGE = 'storages.backends.s3.S3Storage'
