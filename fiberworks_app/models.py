@@ -1,5 +1,7 @@
 from django.db import models
 from django.urls import reverse
+from django.core.exceptions import ValidationError
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=100)
@@ -36,8 +38,8 @@ class Homescreen(models.Model):
 
     def __str__(self):
         return self.title
-    def get_absolute_url(self):
-        return reverse("homescreen_details", kwargs={"pk": self.pk})
+    # def get_absolute_url(self):
+    #     return reverse("homescreen_details", kwargs={"pk": self.pk})
 
 
 class Customer(models.Model):
