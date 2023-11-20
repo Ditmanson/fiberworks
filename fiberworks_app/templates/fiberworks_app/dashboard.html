@@ -44,9 +44,9 @@
   </div>
   {% for title in homescreen %}
     <div class="row bg-light">
-      <div class="col">
-        <a class="btn btn-outline-primary" href="{% url 'update_home_screen' title.pk %}">{{ title.title }}</a>
-        <a class="btn btn-outline-danger" href="{% url 'delete_home_screen' title.pk %}">Delete</a>
+      <div class="col m-2">
+        <a class="btn btn-outline-primary m-2" href="{% url 'update_home_screen' title.pk %}">{{ title.title }}</a>
+        <a class="btn btn-outline-danger m-2" href="{% url 'delete_home_screen' title.pk %}">Delete</a>
       </div>
     </div>
   {% endfor %}
