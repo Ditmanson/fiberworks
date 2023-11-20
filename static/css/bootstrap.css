@@ -2597,7 +2597,7 @@ textarea.form-control-sm {
 textarea.form-control-lg {
     min-height: calc(1.5em + 1rem + calc(var(--bs-border-width) * 2))
 }
-
+/* 
 .form-control-color {
     width: 3rem;
     height: calc(1.5em + .75rem + calc(var(--bs-border-width) * 2));
@@ -3082,7 +3082,7 @@ textarea.form-control-lg {
 .form-floating>.form-control:disabled~label::after,
 .form-floating>:disabled~label::after {
     background-color: var(--bs-secondary-bg)
-}
+} */
 
 .input-group {
     position: relative;

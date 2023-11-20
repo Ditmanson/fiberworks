@@ -5,7 +5,7 @@
   {% for info in homescreen %}
     <div class="container rounded text-light" style="background-color: #052c65;">
       <h2>{{ info.title }}</h2>
-      <p>{{ info.paragraph }}</p>
+      <p>{{ info.paragraph |linebreaks}}</p>
     </div>
     {% empty %}
     <p>More Info Soon To Come</p>
@@ -23,7 +23,7 @@
             style="max-width: 100%;" />
         </div>
         {% empty %}
-        <p></p>
+        <p>More to come</p>
       {% endfor %}
     </div>
   </div>

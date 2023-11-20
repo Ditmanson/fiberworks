@@ -8,6 +8,9 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from PIL import Image
+from io import BytesIO
+from django.core.files import File
 
 def index(request):
     products_in_stock = Product.objects.filter(in_stock=True)
@@ -33,26 +36,27 @@ def deleteHomeScreen(request, pk):
     return render(request, 'fiberworks_app/delete_home_screen.html', context)
 
 
-class ProductListView(ListView):
-    model = Product
-    template_name = 'fiberworks_app/products.html'
-    context_object_name = 'products_in_stock'
-    ordering = ['name']
-    paginate_by = 10
+# class ProductListView(ListView):
+#     model = Product
+#     template_name = 'fiberworks_app/products.html'
+#     context_object_name = 'products_in_stock'
+#     ordering = ['name']
+#     paginate_by = 10
 
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'fiberworks_app/product_details.html'
     context_object_name = 'product'
 
+
 @login_required(login_url='login')
 def createProduct(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
-            # product = form.save(commit=False)
-            # product.image = optimize_image(product.image)  # Optimize the image before saving
-            form.save()  # Save the product to the database
+            product = form.save(commit=False)
+            product.image = compress_image(product.image)  # Compress the image before saving
+            product.save()  # Save the product to the database
             return redirect('dashboard')  # Redirect to an empty form
 
     else:
@@ -60,6 +64,22 @@ def createProduct(request):
 
     context = {'form': form}
     return render(request, 'fiberworks_app/product_form.html', context)
+
+# @login_required(login_url='login')
+# def createProduct(request):
+#     if request.method == 'POST':
+#         form = ProductForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             # product = form.save(commit=False)
+#             # product.image = optimize_image(product.image)  # Optimize the image before saving
+#             form.save()  # Save the product to the database
+#             return redirect('dashboard')  # Redirect to an empty form
+
+#     else:
+#         form = ProductForm()  # Create a new form for GET requests
+
+#     context = {'form': form}
+#     return render(request, 'fiberworks_app/product_form.html', context)
 
 def updateProduct(request, pk):
     product = Product.objects.get(id=pk)
