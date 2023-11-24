@@ -65,22 +65,7 @@ def createProduct(request):
     context = {'form': form}
     return render(request, 'fiberworks_app/product_form.html', context)
 
-# @login_required(login_url='login')
-# def createProduct(request):
-#     if request.method == 'POST':
-#         form = ProductForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             # product = form.save(commit=False)
-#             # product.image = optimize_image(product.image)  # Optimize the image before saving
-#             form.save()  # Save the product to the database
-#             return redirect('dashboard')  # Redirect to an empty form
-
-#     else:
-#         form = ProductForm()  # Create a new form for GET requests
-
-#     context = {'form': form}
-#     return render(request, 'fiberworks_app/product_form.html', context)
-
+# @
 def updateProduct(request, pk):
     product = Product.objects.get(id=pk)
     form = ProductForm(instance=product)

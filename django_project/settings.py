@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'fiberworks_app',
     'bootstrap5',
     'storages',
+    
 ]
 
 MIDDLEWARE = [
@@ -128,6 +129,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+COVERAGE_RUN_EXTRA_ARGS = [
+    '--source=fiberworks_app',  # Replace with the actual name of your app
+]
 
 # S3 BUCKETS CONFIGURATION
 AWS_ACCESS_KEY_ID = 'AKIA5SKSI47CJIHRG47M'
