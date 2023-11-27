@@ -1,22 +1,24 @@
 {% extends 'fiberworks_app/base_template.html' %}
 
 {% block content %}
-  <h1>{{ product.name }}</h1>
-<div class="container" style=" max-height: 60vh;
+  <div class="container m-2" style=" max-height: 80vh;
       width: auto;">
-
-  <div class="card-body">
-    <h5 class="card-title">{{ product.name }}</h5>
-    {% if product.image %}
-      <img class="card-img-top py-1 rounded-top" src="{{ product.image.url }}" alt="Card image" style=" max-height: 60vh;
+    <div class="row">
+      <div class="col-8">
+        {% if product.image %}
+          <img class="card-img-top py-1 rounded-top" src="{{ product.image.url }}" alt="Card image" style=" max-height: 60vh;
       width: auto;" />
-    {% else %}
-      <img class="card-img-top py-1 rounded-top" src="https://images.unsplash.com/photo-1544967919-44c1ef2f9e7a?auto=format&fit=crop&q=60&w=600&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8a25pdHxlbnwwfHwwfHx8MA%3D%3D" alt="Card image" style="width: 100%" />
-    {% endif %}
-    <p class="card-text">{{ product.description |linebreaks }}</p>
-    <p class="card-text">
-      <small class="text-muted">{{ product.price }}</small>
-    </p>
-  </div>
-</div>
+        {% else %}
+          <img class="card-img-top py-1 rounded-top" src="https://images.unsplash.com/photo-1544967919-44c1ef2f9e7a?auto=format&fit=crop&q=60&w=600&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8a25pdHxlbnwwfHwwfHx8MA%3D%3D" alt="Card image" style="width: 100%" />
+        {% endif %}
+      </div>
+      <div class="col-4">
+        <h1>{{ product.name }}</h1>
+        <p class="card-text">{{ product.description|linebreaks }}</p>
+        <p class="card-text">
+          <small class="text-muted">${{ product.price }}</small>
+        </p>
+      </div>
+    </div>
+   
 {% endblock %}

@@ -1,0 +1,33 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.bg-redvelvet{
+    background-color: #6f1d1b ;
+}
+.bg-chocolate{
+    background-color: #432818;
+}
+.bg-cream{ 
+    background-color: #ffe6a7;
+}
+.bg-pale-dogwood{
+    background-color: #eacdc2;
+}
+.bg-raisin-black{
+    background-color: #1a1423;
+    color:#eacdc2
+}
+.bg-eggplant{
+    background-color: #774c60;
+    color: #1a1423;
+}
+.bg-plum{
+    background-color: #372549;
+}
+.bg-redwood{
+    background-color: #B75D69;
+}
