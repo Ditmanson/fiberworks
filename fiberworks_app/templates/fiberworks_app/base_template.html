@@ -8,43 +8,45 @@
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
-    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}"> {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    {% comment %} <link rel="stylesheet" type="text/css" href="../../../static/css/main.css"> {% endcomment %}
+
     {% comment %} we started this project with one version of boosttrap but found we needed another as well {% endcomment %}
   </head>
-  <body>
-    <div class="container-fluid bg-light">
+  <body class="bg-pale-dogwood">
+    <div class="container-fluid bg-eggplant">
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-sm bg-body-tertiary ">
+      <nav class="navbar navbar-expand-sm  ">
         <div class="container-fluid ">
           <img class="img-thumbnail" width="90" height="74" src="{% static 'images/knit.jpg' %}" />
 
           {% comment %} <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon">t</span></button> {% endcomment %}
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#1a1423" class="bi bi-list" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 0 3 12h10a.5.5 0 0 0 0-1H3a.5.5 0 0 0-.5.5zm0-4A.5.5 0 0 0 3 8h10a.5.5 0 0 0 0-1H3a.5.5 0 0 0-.5.5zm0-4A.5.5 0 0 0 3 4h10a.5.5 0 0 0 0-1H3a.5.5 0 0 0-.5.5z"/>
             </svg>
         </button>
           <div class="collapse navbar-collapse " id="navbarNav">
-            <ul class="navbar-nav nav justify-content-end ms-auto">
+            <ul class="navbar-nav nav  justify-content-end ms-auto">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+                <a class="nav-link  bg-eggplant active" aria-current="page" href="{% url 'index' %}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                <a class="nav-link bg-eggplant" href="{% url 'dashboard' %}">Dashboard</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'products' %}">Customer view</a>
+                <a class="nav-link bg-eggplant" href="{% url 'products' %}">Customer view</a>
               </li>
               {% if request.user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'logout' %}">Log out</a>
+                <a class="nav-link bg-eggplant" href="{% url 'logout' %}">Log out</a>
               </li>
               {% else %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                <a class="nav-link bg-eggplant" href="{% url 'login' %}">Login</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'register' %}">Register</a>
+                <a class="nav-link bg-eggplant" href="{% url 'register' %}">Register</a>
               </li>
               {% endif %}
                {% comment %} <li>

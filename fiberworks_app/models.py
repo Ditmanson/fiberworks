@@ -1,10 +1,10 @@
 from django.db import models
 from django.urls import reverse
 from .utils import delete_image_from_s3
-from django.core.exceptions import ValidationError
-from PIL import Image, ImageOps
-from django.core.files.images import ImageFile
-import io
+# from django.core.exceptions import ValidationError
+# from PIL import Image, ImageOps
+# from django.core.files.images import ImageFile
+# import io
 
 
 class Tag(models.Model):

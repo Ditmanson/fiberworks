@@ -3,22 +3,31 @@
 <!-- Replace block content in base_template.html -->
 {% block content %}
   <div class="container-fluid">
-    <div class="row row-cols-2 row-cols-md-6 row-cols-lg-10 g-3">
-      {% for product in products %}
-        <div class="col bg-light text-bg-light p-2"> <!-- Adjust padding and spacing -->
-          <div class="card" >
-            <img class="card-img-top img-fluid rounded thumbnail w-80 mx-auto"  src="{% if product.image %}{{ product.image.url }}{% else %}https://images.unsplash.com/photo-1544967919-44c1ef2f9e7a?auto=format&fit=crop&q=60&w=600&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8a25pdHxlbnwwfHwwfHx8MA%3D%3D{% endif %}" alt="Card image" style="max-width: 100%;">
-            <div class="card-body">
-              <h5 class="card-title">{{ product.name }}</h5>
-              <p class="card-text">${{ product.price }}</p>
-              <a href="{% url 'index' %}" class="btn btn-info">Add To Cart</a>
-              <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Details</a>
-            </div>
+    {% if request.user.is_authenticated %}
+      <a class="btn bg-redwood text-dark m-2" href="{% url 'create_product' %}">Create New Product</a>
+    {% endif %}
+    {% for product in products %}
+        <div class="row">
+          <div class="col {% if forloop.counter|divisibleby:2 %}order-2{% else %}order-1{% endif %}">
+            {% if product.image %}
+            <img class="card-img-top py-1 rounded-top" src="{{ product.image.url }}" alt="Card image" style="max-width: 100%; max-height: 60vh; object-fit: cover;
+            object-position: center 25%;" />
+            {% else %}
+              <img class="card-img-top py-1 rounded-top" src="{{ product.image.url }}" alt="Card image" style="max-width: 100%; max-height: 60vh;" />
+            {% endif %}
+          </div>
+          <div class="col bg-raisin-black {% if forloop.counter|divisibleby:2 %}order-1{% else %}order-2{% endif %}">
+            {% if request.user.is_authenticated %}
+              <a class="btn btn-primary" href="{% url 'update_product' product.pk %}">Update</a>
+              <a class="btn btn-danger" href="{% url 'delete_product' product.pk %}">Delete</a>
+            {% endif %}
+              <a href="{% url 'index' %}" class="btn bg-pale-dogwood disabled m-1">${{product.price}}</a>
+              <a href="{{ product.get_absolute_url }}" class="m-1 btn bg-pale-dogwood">{{product.name}}</a>
+              <p class=>{{product.description}}<p/>
           </div>
         </div>
-      {% empty %}
-        <p>There are no products.</p>
-      {% endfor %}
-    </div>
+    {% empty %}
+      <p>There are no products.</p>
+    {% endfor %}
   </div>
 {% endblock %}
