@@ -8,15 +8,15 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from PIL import Image
-from io import BytesIO
-from django.core.files import File
+from django.apps import apps
+from django.shortcuts import get_object_or_404
+
 
 def index(request):
-    products_in_stock = Product.objects.filter(in_stock=True)
     homescreen = Homescreen.objects.all()
     home_page_products = Product.objects.filter(on_homepage=True)
-    return render(request, 'fiberworks_app/index.html', {'home_page_products': home_page_products, 'homescreen': homescreen })
+    products = Product.objects.filter(in_stock=True)
+    return render(request, 'fiberworks_app/index.html', {'home_page_products': home_page_products, 'homescreen': homescreen, 'products': products })
 
 @login_required(login_url='login')
 def dashboard(request):
@@ -30,24 +30,16 @@ def deleteHomeScreen(request, pk):
     homescreen = Homescreen.objects.get(id=pk)
     if request.method == 'POST':
         homescreen.delete()
-        return redirect('dashboard')
+        return redirect('index')
 
     context = {'homescreen': homescreen}
     return render(request, 'fiberworks_app/delete_home_screen.html', context)
 
 
-# class ProductListView(ListView):
-#     model = Product
-#     template_name = 'fiberworks_app/products.html'
-#     context_object_name = 'products_in_stock'
-#     ordering = ['name']
-#     paginate_by = 10
-
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'fiberworks_app/product_details.html'
     context_object_name = 'product'
-
 
 @login_required(login_url='login')
 def createProduct(request):
@@ -57,7 +49,7 @@ def createProduct(request):
             product = form.save(commit=False)
             product.image = compress_image(product.image)  # Compress the image before saving
             product.save()  # Save the product to the database
-            return redirect('dashboard')  # Redirect to an empty form
+            return redirect('index')  # Redirect to an empty form
 
     else:
         form = ProductForm()  # Create a new form for GET requests
@@ -65,7 +57,7 @@ def createProduct(request):
     context = {'form': form}
     return render(request, 'fiberworks_app/product_form.html', context)
 
-# @
+@login_required(login_url='login')
 def updateProduct(request, pk):
     product = Product.objects.get(id=pk)
     form = ProductForm(instance=product)
@@ -73,7 +65,7 @@ def updateProduct(request, pk):
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()  # Save the product to the database
-            return redirect('dashboard')  # Redirect to the product details page
+            return redirect('index')  # Redirect to the product details page
 
     context = {'form': form}
     return render(request, 'fiberworks_app/product_form.html', context)
@@ -89,14 +81,18 @@ def deleteProduct(request, pk):
         # Delete the associated image from the S3 bucket
         if image_key:
             delete_image_from_s3(image_key)
-        return redirect('dashboard')
-    context = {'product': product}
+        return redirect('index')
+    context = {'product': product,
+               'object_id': product.pk,
+                'delete_url': reverse('delete_product', args=[pk]),
+               }
     return render(request, 'fiberworks_app/delete_product.html', context)
 
 
 def products(request):
     products = Product.objects.filter(in_stock=True)
-    return render(request, 'fiberworks_app/products.html', {'products': products, })
+    homescreen = Homescreen.objects.all()
+    return render(request, 'fiberworks_app/products.html', {'products': products, 'homescreen': homescreen})
 
 @login_required(login_url='login')
 def createTag(request):
@@ -104,7 +100,7 @@ def createTag(request):
         form = HomeScreenForm(request.POST)
         if form.is_valid():
             form.save()  # Save the product to the database
-            return redirect('dashboard')  # Redirect to an empty form
+            return redirect('index')  # Redirect to an empty form
     else:
         form = TagForm()  # Create a new form for GET requests
     context = {'form': form}
@@ -118,7 +114,7 @@ def updateTag(request, pk):
         form = TagForm(request.POST,  instance=tag)
         if form.is_valid():
             form.save()  # Save the product to the database
-            return redirect('dashboard')  # Redirect to the product details page
+            return redirect('index')  # Redirect to the product details page
 
     context = {'form': form}
     return render(request, 'fiberworks_app/home_screen_form.html', context)
@@ -128,10 +124,13 @@ def deleteTag(request, pk):
     tag = Tag.objects.get(id=pk)
     if request.method == 'POST':
         tag.delete()
-        return redirect('dashboard')
+        return redirect('index')
 
-    context = {'tag': tag}
-    return render(request, 'fiberworks_app/delete_tag.html', context)
+    context = {'tag': tag,
+            'object_id': tag.pk,
+            'delete_url': reverse('delete_tag', args=[pk]), 
+               }
+    return render(request, 'fiberworks_app/delete_product.html', context)
 
 @login_required(login_url='login')
 def createHomeScreen(request):
@@ -139,7 +138,7 @@ def createHomeScreen(request):
         form = HomeScreenForm(request.POST)
         if form.is_valid():
             form.save()  # Save the product to the database
-            return redirect('dashboard')  # Redirect to an empty form
+            return redirect('index')  # Redirect to an empty form
     else:
         form = HomeScreenForm()  # Create a new form for GET requests
     context = {'form': form}
@@ -153,7 +152,7 @@ def updateHomeScreen(request, pk):
         form = HomeScreenForm(request.POST,  instance=homescreen)
         if form.is_valid():
             form.save()  # Save the product to the database
-            return redirect('dashboard')  # Redirect to the product details page
+            return redirect('index')  # Redirect to the product details page
 
     context = {'form': form}
     return render(request, 'fiberworks_app/home_screen_form.html', context)
@@ -165,7 +164,7 @@ def homescreen(request):
 
 def Register(request):
     if request.user.is_authenticated:
-        return redirect('dashboard')
+        return redirect('products')
     else:
         form = CreateUserFrom()
         if request.method == 'POST':
@@ -191,7 +190,7 @@ def Login(request):
                 user = authenticate(username=username, password=password)
                 if user is not None:
                     login(request, user)
-                    return redirect('dashboard')
+                    return redirect('index')
                 else:
                     messages.info(request, 'Username OR password is incorrect')
         else:
@@ -201,3 +200,25 @@ def Login(request):
 def Logout(request):
     logout(request)
     return redirect('login')
+
+
+@login_required(login_url='login')
+def generic_delete(request, model_name, pk):
+    ModelClass = apps.get_model('fiberworks_app', model_name)
+    instance = get_object_or_404(ModelClass, pk=pk)
+
+    if request.method == 'POST':
+        # Get the S3 image key from the instance if it has an image attribute
+        image_key = instance.image.name if hasattr(instance, 'image') and instance.image else None
+        # Delete the instance
+        instance.delete()
+        # Delete the associated image from the S3 bucket
+        if image_key:
+            delete_image_from_s3(image_key)
+        return redirect('index')
+
+    context = {
+        'object': instance,
+        'delete_url': reverse('generic_delete', args=[model_name, pk]),
+    }
+    return render(request, 'fiberworks_app/delete_object.html', context)
