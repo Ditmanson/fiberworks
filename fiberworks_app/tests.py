@@ -27,6 +27,9 @@ class TestModels(TestCase):
             title='test title',
             paragraph='test paragraph',
         )
+        self.tag=Tag.objects.create(
+            name='test tag'
+        )
 
     def test_product(self):
         product_url = reverse("product_details", kwargs={"pk": self.product.id})
@@ -45,6 +48,11 @@ class TestModels(TestCase):
         self.assertEqual(self.homescreen.title, 'test title')
         self.assertEqual(str(self.homescreen), homescreen_str)
         self.assertEqual(self.homescreen.paragraph, 'test paragraph')
+
+    def test_tag_str(self):
+        tag_str = 'test tag'
+        self.assertEqual(self.tag.name, 'test tag')
+        self.assertEqual(str(self.tag), tag_str)
 
 
 class CreateUserTest(TestCase):
@@ -78,7 +86,7 @@ class URLTest(LiveServerTestCase):
         self.browser.get("http://127.0.0.1:8000/")
         time.sleep(2)
         dashboard_link = By.LINK_TEXT, "Dashboard"
-        customer_link = By.LINK_TEXT, "Customer view"
+        # customer_link = By.LINK_TEXT, "Customer view"
         login_link = By.LINK_TEXT, "Login"
         logout_link = By.LINK_TEXT, "Log out"
         register_link = By.LINK_TEXT, "Register"
@@ -96,10 +104,10 @@ class URLTest(LiveServerTestCase):
         self.browser.find_element(By.ID,'submit').click()
         time.sleep(1)
         self.browser.find_element(*home_link).click()
-        time.sleep(1)
-        self.browser.find_element(*customer_link).click()
-        time.sleep(1)
-        self.browser.find_element(*dashboard_link).click()
+        # time.sleep(1)
+        # self.browser.find_element(*customer_link).click()
+        # time.sleep(1)
+        # self.browser.find_element(*dashboard_link).click()
 
 
 

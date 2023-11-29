@@ -28,14 +28,15 @@ class Product(models.Model):
     description = models.TextField(max_length=2000, blank=True, null=True)
     category = models.CharField(max_length=20, default='hats', choices=CATEGORY)
     tags = models.ManyToManyField(Tag, blank=True)
-    image = models.ImageField(blank=True, null=True)
+    image = models.ImageField(upload_to='images/')
     in_stock = models.BooleanField(default=False)    
     on_homepage = models.BooleanField(default=False)
     def __str__(self):
         return self.name
     def delete(self, *args, **kwargs):
-        # Delete the image from S3 before deleting the product instance
-        delete_image_from_s3(self.image.name)
+    # Delete the image from S3 before deleting the product instance
+        if self.image and hasattr(self.image, 'name'):
+            delete_image_from_s3(self.image.name)
         super().delete(*args, **kwargs)
     def get_absolute_url(self):
         return reverse("product_details", kwargs={"pk": self.pk})
