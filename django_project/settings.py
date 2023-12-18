@@ -72,8 +72,12 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Jades_Database',
+        'USER': 'JadeDitmanson',
+        'PASSWORD': config('AWS_DATABASE_PASSWORD'),
+        'HOST': 'jadedatabaseid.ci2my4s4bupw.us-east-2.rds.amazonaws.com',  # or the IP address of your PostgreSQL server if it's remote
+        'PORT': '5432',  # default PostgreSQL port
     }
 }
 
