@@ -19,24 +19,4 @@
     <p>More Info Soon To Come</p>
   {% endfor %}
   {% include './products.html' %}
-{% comment %} 
-  <div class="container">
-    <div class="row">
-      {% for product in home_page_products %}
-        <div class="col">
-          <img class="rounded w-70 my-auto"
-            src="{% if product.image %}
-              {{ product.image.url }}
-            {% endif %}"
-            alt="Card image"
-            style="max-width: 100%;" />
-            {% if request.user.is_authenticated %}
-            <a class="btn bg-redwood text-dark m-2" href="{% url 'update_product' product.pk %}">Remove from homescreen</a>
-            {% endif %}
-        </div>
-        {% empty %}
-        <p>More to come</p>
-      {% endfor %}
-    </div>
-  </div> {% endcomment %}
 {% endblock %}

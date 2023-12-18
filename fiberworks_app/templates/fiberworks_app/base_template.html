@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
   <head>
     <title>Jade's Fiberworks</title>
     <meta charset="utf-8" />
@@ -8,50 +8,39 @@
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-    {% comment %} <link rel="stylesheet" type="text/css" href="../../../static/css/main.css"> {% endcomment %}
-
-    {% comment %} we started this project with one version of boosttrap but found we needed another as well {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
   </head>
   <body class="bg-pale-dogwood">
     <div class="container-fluid bg-eggplant">
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-sm  ">
-        <div class="container-fluid ">
-          <img class="img-thumbnail" width="90" height="74" src="{% static 'images/knit.jpg' %}" />
-
-          {% comment %} <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon">t</span></button> {% endcomment %}
+      <nav class="navbar navbar-expand-sm">
+        <div class="container-fluid">
+          <img class="img-thumbnail" width="300" height="auto" src="{% static 'images/knit.jpg' %}" />
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#1a1423" class="bi bi-list" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 0 3 12h10a.5.5 0 0 0 0-1H3a.5.5 0 0 0-.5.5zm0-4A.5.5 0 0 0 3 8h10a.5.5 0 0 0 0-1H3a.5.5 0 0 0-.5.5zm0-4A.5.5 0 0 0 3 4h10a.5.5 0 0 0 0-1H3a.5.5 0 0 0-.5.5z"/>
+              <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 0 3 12h10a.5.5 0 0 0 0-1H3a.5.5 0 0 0-.5.5zm0-4A.5.5 0 0 0 3 8h10a.5.5 0 0 0 0-1H3a.5.5 0 0 0-.5.5zm0-4A.5.5 0 0 0 3 4h10a.5.5 0 0 0 0-1H3a.5.5 0 0 0-.5.5z" />
             </svg>
-        </button>
-          <div class="collapse navbar-collapse " id="navbarNav">
-            <ul class="navbar-nav nav  justify-content-end ms-auto">
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav nav justify-content-end ms-auto">
               <li class="nav-item">
-                <a class="nav-link  bg-eggplant active" aria-current="page" href="{% url 'index' %}">Home</a>
+                <a class="nav-link bg-eggplant active" aria-current="page" href="{% url 'index' %}">Home</a>
               </li>
-              {% comment %} <li class="nav-item">
-                <a class="nav-link bg-eggplant" href="{% url 'dashboard' %}">Dashboard</a>
-              </li> {% endcomment %}
-              {% comment %} <li class="nav-item">
-                <a class="nav-link bg-eggplant" href="{% url 'products' %}">Customer view</a>
-              </li> {% endcomment %}
+              <li>
+                <a class="nav-link bg-eggplant" href="{% url 'login' %}"></a>
+              </li>
               {% if request.user.is_authenticated %}
-              <li class="nav-item">
-                <a class="nav-link bg-eggplant" href="{% url 'logout' %}">Log out</a>
-              </li>
+                <li class="nav-item">
+                  <a class="nav-link bg-eggplant" href="{% url 'logout' %}">Log out</a>
+                </li>
               {% else %}
-              <li class="nav-item">
-                <a class="nav-link bg-eggplant" href="{% url 'login' %}">Login</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link bg-eggplant" href="{% url 'register' %}">Register</a>
-              </li>
+                {% comment %} <li class="nav-item">
+                  <a class="nav-link bg-eggplant" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link bg-eggplant" href="{% url 'register' %}">Register</a>
+                </li> {% endcomment %}
               {% endif %}
-               {% comment %} <li>
-                  <button class="btn btn-dark" id="darkModeToggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
-              </li>  {% endcomment %}
             </ul>
           </div>
         </div>
@@ -61,26 +50,5 @@
     {% block content %}
 
     {% endblock %}
-    {% comment %} <script>
-      // Check if dark mode is enabled in local storage
-      const isDarkMode = localStorage.getItem('darkMode') === 'true';
-    
-      // Set the initial theme
-      if (isDarkMode) {
-        document.documentElement.dataset.bsTheme = 'dark';
-      }
-    
-      // Toggle dark mode function
-      const toggleDarkMode = () => {
-        const htmlElement = document.documentElement;
-        if (htmlElement.dataset.bsTheme === 'light') {
-          htmlElement.dataset.bsTheme = 'dark';
-          localStorage.setItem('darkMode', 'true');
-        } else {
-          htmlElement.dataset.bsTheme = 'light';
-          localStorage.setItem('darkMode', 'false');
-        }
-      };
-    </script> {% endcomment %}
   </body>
 </html>
