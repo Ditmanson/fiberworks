@@ -17,9 +17,12 @@ DEBUG = True
 X_FRAME_OPTIONS = '*'
 
 ALLOWED_HOSTS = ['localhost','192.168.1.5:8000' , '0.0.0.0:8000', '0.0.0.0', '192.168.1.5',
- '127.0.0.1', '192.168.1.8'
-]
+ '127.0.0.1', '192.168.1.8', 'fiberworks-production.up.railway.app','rockymountainknits.com', 'www.rockymountainknits.com',
+ 'http://www.rockymountainknits.com', 'https://www.rockymountainknits.com']
 
+CSRF_TRUSTED_ORIGINS = [ 'https://fiberworks-production.up.railway.app', 'http://fiberworks-production.up.railway.app',
+                          'http://www.rockymountainknits.com', 
+                         'https://www.rockymountainknits.com', 'https://rockymountainknits.com']
 
 # Application definition
 
@@ -70,14 +73,24 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'Jades_Database',
+#         'USER': 'JadeDitmanson',
+#         'PASSWORD': config('AWS_DATABASE_PASSWORD'),
+#         'HOST': 'jadedatabaseid.ci2my4s4bupw.us-east-2.rds.amazonaws.com',  # or the IP address of your PostgreSQL server if it's remote
+#         'PORT': '5432',  # default PostgreSQL port
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Jades_Database',
-        'USER': 'JadeDitmanson',
-        'PASSWORD': config('AWS_DATABASE_PASSWORD'),
-        'HOST': 'jadedatabaseid.ci2my4s4bupw.us-east-2.rds.amazonaws.com',  # or the IP address of your PostgreSQL server if it's remote
-        'PORT': '5432',  # default PostgreSQL port
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': config('RAILWAY_DATABASE_PASSWORD'),
+        'HOST': 'viaduct.proxy.rlwy.net',  # or the IP address of your PostgreSQL server if it's remote
+        'PORT': '59561',  # default PostgreSQL port
     }
 }
 

@@ -15,7 +15,7 @@ from django.shortcuts import get_object_or_404
 def index(request):
     homescreen = Homescreen.objects.all()
     home_page_products = Product.objects.filter(on_homepage=True)
-    products = Product.objects.filter(in_stock=True)
+    products = Product.objects.all()
     return render(request, 'fiberworks_app/index.html', {'home_page_products': home_page_products, 'homescreen': homescreen, 'products': products })
 
 @login_required(login_url='login')
